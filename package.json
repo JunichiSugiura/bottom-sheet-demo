@@ -5,6 +5,7 @@
   "scripts": {
     "ios": "react-native run-ios --simulator='iPhone X'",
     "ios:release": "react-native run-ios --simulator='iPhone X' --configuration Release",
+    "record": "xcrun simctl io booted recordVideo",
     "reinstall": "./scripts/reinstall.sh",
     "test": "jest"
   },
