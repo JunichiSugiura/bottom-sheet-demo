@@ -16,12 +16,21 @@ export default compose(
   }, {
     setIsOpen: () => isOpen => ({ isOpen })
   }),
-  withHandlers({
-    onAlert: ({ setIsOpen }) => ({ nativeEvent }) => {
-      if (JSON.stringify(nativeEvent).includes("\"basePosition\":\"enter\"")) {
-        setIsOpen(false)
-      } else if (JSON.stringify(nativeEvent).includes("\"basePosition\":\"leave\"")) {
-        setIsOpen(true)
+  withHandlers(() => {
+    let bottomSheetRef
+    return {
+      onAlert: ({ setIsOpen }) => ({ nativeEvent }) => {
+        if (JSON.stringify(nativeEvent).includes("\"basePosition\":\"enter\"")) {
+          setIsOpen(false)
+        } else if (JSON.stringify(nativeEvent).includes("\"basePosition\":\"leave\"")) {
+          setIsOpen(true)
+        }
+      },
+      setBottomSheetRef: () => ref => {
+        bottomSheetRef = ref
+      },
+      onClose: () => () => {
+        bottomSheetRef.snapTo({ index: 0 })
       }
     }
   })

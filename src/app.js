@@ -14,13 +14,15 @@ import Interactable from 'react-native-interactable'
 export default ({
   isOpen,
   onAlert,
-  position
+  onClose,
+  position,
+  setBottomSheetRef
 }) => (
   <View style={styles.container}>
     <Text>Content goes here</Text>
-    <Button title='Can You Still Press Me?' onPress={() => { Alert.alert('Cool, it still works') }} />
+    <Button title='Can You Still Press Me?' onPress={() => { Alert.alert('Cool') }} />
     {isOpen &&
-      <TouchableWithoutFeedback style={styles.shadowTouchable}>
+      <TouchableWithoutFeedback style={styles.shadowTouchable} onPress={onClose}>
         <Animated.View style={[styles.shadow, {
           opacity: position.interpolate({
             inputRange: [0, INITIAL_MARGIN_TOP],
@@ -32,9 +34,11 @@ export default ({
     <Interactable.View
       alertAreas={[{ id: 'basePosition', influenceArea: { top: INITIAL_MARGIN_TOP  } }]}
       animatedValueY={position}
+      boundaries={{top: 0}}
       initialPosition={{ y: INITIAL_MARGIN_TOP }}
       onAlert={onAlert}
-      snapPoints={[{ y: 0 }, { y: INITIAL_MARGIN_TOP }, { y: HEIGHT - WIDTH }]}
+      ref={ref => setBottomSheetRef(ref)}
+      snapPoints={[{ y: INITIAL_MARGIN_TOP }, { y: HEIGHT / 2 }, { y: 0 }]}
       style={{position: 'absolute'}}
       verticalOnly>
       <View style={styles.bottomSheet} /> 
