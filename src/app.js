@@ -1,6 +1,8 @@
 import React from 'react'
 import {
+  Alert,
   Animated,
+  Button,
   Dimensions,
   Text,
   TouchableWithoutFeedback,
@@ -12,6 +14,8 @@ import Interactable from 'react-native-interactable'
 export default ({ position }) => (
   <View style={styles.container}>
     <Text>Content goes here</Text>
+    <Text>{position.__getValue()}</Text>
+    <Button title='Can You Still Press Me?' onPress={() => { Alert.alert('Cool, it still works') }} />
     <TouchableWithoutFeedback style={styles.shadowTouchable}>
       <Animated.View style={[styles.shadow, {
         opacity: position.interpolate({
@@ -40,6 +44,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
+    justifyContent: 'center',
     paddingTop: 40
   },
   shadow: {
