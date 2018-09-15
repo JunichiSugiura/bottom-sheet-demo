@@ -11,25 +11,32 @@ import {
 } from 'react-native'
 import Interactable from 'react-native-interactable'
 
-export default ({ position }) => (
+export default ({
+  isOpen,
+  onAlert,
+  position
+}) => (
   <View style={styles.container}>
     <Text>Content goes here</Text>
-    <Text>{position.__getValue()}</Text>
     <Button title='Can You Still Press Me?' onPress={() => { Alert.alert('Cool, it still works') }} />
-    <TouchableWithoutFeedback style={styles.shadowTouchable}>
-      <Animated.View style={[styles.shadow, {
-        opacity: position.interpolate({
-          inputRange: [0, INITIAL_MARGIN_TOP],
-          outputRange: [1, 0]
-        })
-      }]} />
-    </TouchableWithoutFeedback>
+    {isOpen &&
+      <TouchableWithoutFeedback style={styles.shadowTouchable}>
+        <Animated.View style={[styles.shadow, {
+          opacity: position.interpolate({
+            inputRange: [0, INITIAL_MARGIN_TOP],
+            outputRange: [1, 0]
+          })
+        }]} />
+      </TouchableWithoutFeedback>
+    }
     <Interactable.View
-      verticalOnly
-      initialPosition={{ y: INITIAL_MARGIN_TOP }}
-      snapPoints={[{ y: 0 }, { y: INITIAL_MARGIN_TOP }, { y: HEIGHT - WIDTH }]}
+      alertAreas={[{ id: 'basePosition', influenceArea: { top: INITIAL_MARGIN_TOP  } }]}
       animatedValueY={position}
-      style={{position: 'absolute'}}>
+      initialPosition={{ y: INITIAL_MARGIN_TOP }}
+      onAlert={onAlert}
+      snapPoints={[{ y: 0 }, { y: INITIAL_MARGIN_TOP }, { y: HEIGHT - WIDTH }]}
+      style={{position: 'absolute'}}
+      verticalOnly>
       <View style={styles.bottomSheet} /> 
     </Interactable.View>
   </View>
