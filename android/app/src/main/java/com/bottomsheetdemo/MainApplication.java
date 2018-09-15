@@ -1,4 +1,4 @@
-package com.interactabledemo;
+package com.bottomsheetdemo;
 
 import android.app.Application;
 

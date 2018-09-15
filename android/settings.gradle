@@ -1,4 +1,4 @@
-rootProject.name = 'InteractableDemo'
+rootProject.name = 'BottomSheetDemo'
 include ':react-native-interactable'
 project(':react-native-interactable').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-interactable/android')
 
